@@ -36,7 +36,6 @@ case $ENVIRONMENT in
     docker run \
         --name $INSTALLATION_NAME \
         -p $OPENEMR_PORT:80 \
-        -p $CLIENT_PORT:81 \
         --env OPENEMR_PORT=$OPENEMR_PORT \
         --env UPGRADE=yes \
         --env FORCE_OPENEMR_UPGRADE=$ROLLING_OPENEMR_VERSION \

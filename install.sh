@@ -39,7 +39,6 @@ case $ENVIRONMENT in
     docker run \
         --name $INSTALLATION_NAME \
         -p $OPENEMR_PORT:80 \
-        -p $CLIENT_PORT:81 \
         --env OPENEMR_PORT=$OPENEMR_PORT \
         --env SERVER_ADDRESS=$SERVER_ADDRESS \
         --env MYSQL_HOST=$MYSQL_HOST \

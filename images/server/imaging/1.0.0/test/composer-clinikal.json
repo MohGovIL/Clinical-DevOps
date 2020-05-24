@@ -1,0 +1,40 @@
+{
+  "name": "clinikal/openemr",
+  "description": "Imaging vertical of clinikal project (fork of OpenEMR)",
+  "authors": [
+    {
+      "name": "Clinikal team"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/israeli-moh/clinikal-backend.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/israeli-moh/composer-installers-clinikal-extender.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/israeli-moh/vertical-imaging-backend.git"
+    }
+  ],
+  "require": {
+    "clinikal/clinikal-backend": "dev-1.0.0",
+    "clinikal/composer-installers-clinikal-extender": "dev-1.0.0",
+    "clinikal/vertical-imaging-backend": "dev-1.0.0"
+  },
+  "extra": {
+    "installer-types": [
+      "clinikal-vertical",
+      "clinikal-react"
+    ],
+    "installer-paths": {
+    }
+  },
+  "config":{
+    "clinikal-env": "test",
+    "install-name": "."
+  }
+}

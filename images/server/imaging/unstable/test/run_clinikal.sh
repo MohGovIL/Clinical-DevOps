@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Check if we need to force an openemr upgrade
 if ! [ -f "initialized" ] && [ "$FORCE_OPENEMR_UPGRADE" == "yes" ];then
@@ -59,8 +59,8 @@ else
     echo "Skipping container initialization"
 fi
 
-echo "Starting cron daemon!"
+echo "Starting cron daemon"
 crond
 
-echo "Starting apache!"
+echo "Starting Apache"
 /usr/sbin/httpd -D FOREGROUND

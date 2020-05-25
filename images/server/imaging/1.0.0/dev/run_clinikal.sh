@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Script from openemr image
 . autoconfig.sh

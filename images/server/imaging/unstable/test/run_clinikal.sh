@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Check if we need to force an openemr upgrade
 if ! [ -f "initialized" ] && [ "$FORCE_OPENEMR_UPGRADE" == "yes" ];then
@@ -39,7 +39,7 @@ if ! [ -f "initialized" ];then
 
     echo "Building Client Application"
     cd clinikal-react
-    printf 'REACT_APP_API_BASE_URL='$SERVER_ADDRESS:$OPENEMR_PORT >> .env.local
+    printf 'REACT_APP_API_BASE_URL=backend.'$DOMAIN_NAME >> .env.local
     npm run build
     npm cache clear --force 
     rm -fr node_modules
@@ -50,14 +50,17 @@ if ! [ -f "initialized" ];then
     find . -type f -print0 | xargs -0 chmod 400
     cd ../
 
+    echo "Configuring Apache"
+    sed -i -e "s@<DOMAIN_NAME>@$DOMAIN_NAME@" /etc/apache2/conf.d/clinikal.conf
+
     # Create file as a flag that container was run for the first time
     touch initialized
 else
     echo "Skipping container initialization"
 fi
 
-echo "Starting cron daemon!"
+echo "Starting cron daemon"
 crond
 
-echo "Starting apache!"
+echo "Starting Apache"
 /usr/sbin/httpd -D FOREGROUND

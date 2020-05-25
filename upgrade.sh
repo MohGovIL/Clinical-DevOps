@@ -35,11 +35,9 @@ case $ENVIRONMENT in
 
     docker run \
         --name $INSTALLATION_NAME \
-        -p $OPENEMR_PORT:80 \
-        --env OPENEMR_PORT=$OPENEMR_PORT \
         --env UPGRADE=yes \
         --env FORCE_OPENEMR_UPGRADE=$ROLLING_OPENEMR_VERSION \
-        --env SERVER_ADDRESS=$SERVER_ADDRESS \
+        --env DOMAIN_NAME=$DOMAIN_NAME \
         --env MYSQL_HOST=$MYSQL_HOST \
         --env MYSQL_DATABASE=$INSTALLATION_NAME \
         --env MYSQL_USER=$INSTALLATION_NAME \

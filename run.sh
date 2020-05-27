@@ -8,9 +8,15 @@ FULL_HOST_CODEBASE_PATH=${HOST_CODEBASE_PATH}/${INSTALLATION_NAME}
 
 case $ENVIRONMENT in
   dev)
-    . $CLINIKAL_DEVOPS_PATH/dev-environment/scripts/initialize-codebase.sh
-
     docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev
+    
+    if ! [ -d $FULL_HOST_CODEBASE_PATH/openemr ]
+        # this is an installation
+        . $CLINIKAL_DEVOPS_PATH/dev-environment/scripts/initialize-codebase.sh
+    else
+        # this is an upgrade
+        docker rm -f $INSTALLATION_NAME
+    fi
 
     docker run \
         --name $INSTALLATION_NAME \
@@ -30,12 +36,15 @@ case $ENVIRONMENT in
   test)
     docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
 
-    # if already exists does nothing
-    docker volume create ${INSTALLATION_NAME}_sites
-
-    # if already exists does nothing
-    docker volume create ${INSTALLATION_NAME}_logs
-
+    if ! [ "$(docker ps -aq -f name=$INSTALLATION_NAME)" ]; then
+        # this is an installation
+        docker volume create ${INSTALLATION_NAME}_sites
+        docker volume create ${INSTALLATION_NAME}_logs
+    else
+        # if this is an upgrade
+        docker rm -f $INSTALLATION_NAME
+    fi
+    
     docker run \
         --name $INSTALLATION_NAME \
         --env DOMAIN_NAME=$DOMAIN_NAME \

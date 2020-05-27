@@ -1,5 +1,7 @@
 #!/bin/sh
 
+chown -R apache openemr/
+
 # Check if we need to force an openemr upgrade
 if ! [ -f "initialized" ] && [ "$FORCE_OPENEMR_UPGRADE" == "yes" ];then
     echo -n 0 > openemr/sites/default/docker-version

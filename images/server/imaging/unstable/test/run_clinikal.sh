@@ -1,5 +1,7 @@
 #!/bin/sh
 
+chown -R apache openemr/
+
 # Check if we need to force an openemr upgrade
 if ! [ -f "initialized" ] && [ -f "/var/www/localhost/htdocs/openemr/sites/clinikal_installed" ];then
     echo -n 0 > openemr/sites/default/docker-version

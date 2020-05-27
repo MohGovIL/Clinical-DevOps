@@ -28,8 +28,6 @@ RUN php create-composer-file.php . composer-clinikal.json \
     && composer dump-autoload -o \
     && composer clearcache
 
-RUN chown -R apache .
-
 WORKDIR /var/www/localhost/htdocs
 
 # clinikal client-app

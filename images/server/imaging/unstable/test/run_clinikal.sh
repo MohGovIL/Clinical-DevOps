@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo "Configure Openemr Permissions"
 chown -R apache openemr/
 
 # Check if we need to force an openemr upgrade
@@ -41,12 +42,8 @@ if ! [ -f "initialized" ];then
     echo "Adding Translations"
     mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < translation.sql
 
-    echo "Building Client Application"
+    echo "Configure Client Application Permissions"
     cd clinikal-react
-    printf 'REACT_APP_API_BASE_URL=backend.'$DOMAIN_NAME >> .env.local
-    npm run build
-    npm cache clear --force 
-    rm -fr node_modules
     chown -R apache .
     #set all directories to 500
     find . -type d -print0 | xargs -0 chmod 500

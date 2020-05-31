@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Configure Openemr Permissions"
+echo "Configuring Openemr Permissions"
 chown -R apache openemr/
 
 # Check if we need to force an openemr upgrade
@@ -10,6 +10,7 @@ fi
 
 # Script from openemr image
 cd openemr
+echo "Running Openemr Initialization"
 . autoconfig.sh
 cd ../
 
@@ -42,7 +43,7 @@ if ! [ -f "initialized" ];then
     echo "Adding Translations"
     mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < translation.sql
 
-    echo "Configure Client Application Permissions"
+    echo "Configuring Client Application Permissions"
     cd clinikal-react
     chown -R apache .
     #set all directories to 500

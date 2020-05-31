@@ -36,9 +36,11 @@ RUN apk --no-cache upgrade \
     && cd ../ \
     && apk del --no-cache git curl
 
+WORKDIR /var/www/localhost/htdocs
+
 RUN wget --tries=2 --no-check-certificate -O translation.sql https://40.87.137.89/clinikal-translation/pages/exportlang.php
 
-COPY run_clinikal.sh modules.txt /var/www/localhost/htdocs/
+COPY run_clinikal.sh modules.txt ./
 
 RUN chmod 500 run_clinikal.sh
 

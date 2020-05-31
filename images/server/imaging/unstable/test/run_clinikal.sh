@@ -1,19 +1,23 @@
 #!/bin/sh
 
+echo "Configuring Openemr Permissions"
+chown -R apache openemr/
+
 # Check if we need to force an openemr upgrade
-if ! [ -f "initialized" ] && [ "$FORCE_OPENEMR_UPGRADE" == "yes" ];then
+if ! [ -f "initialized" ] && [ -f "/var/www/localhost/htdocs/openemr/sites/clinikal_installed" ];then
     echo -n 0 > openemr/sites/default/docker-version
 fi
 
 # Script from openemr image
 cd openemr
+echo "Running Openemr Initialization"
 . autoconfig.sh
 cd ../
 
 # Only run on initial container start
 if ! [ -f "initialized" ];then
     #If we're running an installation
-    if [ -z $UPGRADE ]; then
+    if ! [ -f "/var/www/localhost/htdocs/openemr/sites/clinikal_installed" ]; then
         echo "Installing Clinikal Modules"
         while read module || [ -n "$module" ]; do
             echo "Installing $module Module..."
@@ -22,10 +26,12 @@ if ! [ -f "initialized" ];then
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=disable --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=install_acl --modname=$module
         done < modules.txt 
-    fi
+
+        # Create file as a flag that application installation process was run
+        touch /var/www/localhost/htdocs/openemr/sites/clinikal_installed
 
     # If we're running an upgrade
-    if [ "$UPGRADE" == "yes" ]; then        
+    else        
         echo "Updating Clinikal Modules"
         while read module; do
             echo "Updating $module Module..."
@@ -37,12 +43,8 @@ if ! [ -f "initialized" ];then
     echo "Adding Translations"
     mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < translation.sql
 
-    echo "Building Client Application"
+    echo "Configuring Client Application Permissions"
     cd clinikal-react
-    printf 'REACT_APP_API_BASE_URL=backend.'$DOMAIN_NAME >> .env.local
-    npm run build
-    npm cache clear --force 
-    rm -fr node_modules
     chown -R apache .
     #set all directories to 500
     find . -type d -print0 | xargs -0 chmod 500

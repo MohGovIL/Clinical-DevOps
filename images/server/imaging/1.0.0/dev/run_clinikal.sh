@@ -6,7 +6,7 @@
 # Only run on initial container start
 if ! [ -f "initialized" ];then
     #If we're running an installation
-    if [ -z $UPGRADE ]; then
+    if ! [ -f "/var/www/localhost/htdocs/openemr/sites/clinikal_installed" ]; then
         echo "Installing Clinikal Modules"
         while read module || [ -n "$module" ]; do
             echo "Installing $module Module..."
@@ -15,10 +15,12 @@ if ! [ -f "initialized" ];then
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=disable --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=install_acl --modname=$module
         done < modules.txt 
-    fi
 
+        # Create file as a flag that application installation process was run
+        touch /var/www/localhost/htdocs/openemr/sites/clinikal_installed
+        
     # If we're running an upgrade
-    if [ "$UPGRADE" == "yes" ]; then
+    else
         echo "Running Openemr SQL Update"
         php run_openemr_sql_update.php
         

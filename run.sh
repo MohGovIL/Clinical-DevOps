@@ -8,7 +8,7 @@ FULL_HOST_CODEBASE_PATH=${HOST_CODEBASE_PATH}/${INSTALLATION_NAME}
 
 case $ENVIRONMENT in
   dev)
-    #docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev
+    docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev
     
     if ! [ -d $FULL_HOST_CODEBASE_PATH/openemr ];then
         # this is an installation
@@ -34,7 +34,7 @@ case $ENVIRONMENT in
     ;;
 
   test)
-    #docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
+    docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
 
     if ! [ "$(docker ps -aq -f name=$INSTALLATION_NAME)" ]; then
         # this is an installation

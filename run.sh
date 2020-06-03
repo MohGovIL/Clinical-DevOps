@@ -4,17 +4,34 @@ CLINIKAL_DEVOPS_PATH=$( cd $( dirname ${BASH_SOURCE[0]} ) && pwd )
 
 . $CLINIKAL_DEVOPS_PATH/container.cfg
 
-FULL_HOST_CODEBASE_PATH=${HOST_CODEBASE_PATH}/${INSTALLATION_NAME}
+
+
+# we want to use containerized mariadb
+if [ "$CONTAINERIZED_DB" == "true" ];then
+    # for use in docker run command
+    MYSQL_HOST=$DB_CONTAINER_NAME
+    NETWORK="--network=$DOCKER_CUSTOM_NETWORK_NAME"
+
+    # run mariadb container
+    . $CLINIKAL_DEVOPS_PATH/mariadb/run.sh
+
+# we want to use host machine mariadb
+else
+    MYSQL_HOST=$BRIDGE_HOST_IP
+fi
+    
+
 
 case $ENVIRONMENT in
   dev)
     docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev
     
-    if ! [ -d $FULL_HOST_CODEBASE_PATH/openemr ];then
-        # this is an installation
+    # this is an installation
+    if ! [ -d $FULL_HOST_CODEBASE_PATH/openemr ];then       
         . $CLINIKAL_DEVOPS_PATH/dev-environment/scripts/initialize-codebase.sh
+    
+    # this is an upgrade
     else
-        # this is an upgrade
         docker rm -f $INSTALLATION_NAME
     fi
 
@@ -25,23 +42,26 @@ case $ENVIRONMENT in
         --env EASY_DEV_MODE_NEW=yes \
         --env FORCE_NO_BUILD_MODE=yes \
         --env MYSQL_HOST=$MYSQL_HOST \
+        $NETWORK \
         --env MYSQL_DATABASE=$INSTALLATION_NAME \
         --env MYSQL_USER=$INSTALLATION_NAME \
         --env-file $CLINIKAL_DEVOPS_PATH/creds.cfg \
         -v $FULL_HOST_CODEBASE_PATH/openemr:/openemr:ro \
         -v $FULL_HOST_CODEBASE_PATH/openemr:/var/www/localhost/htdocs/openemr \
-        israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev    
+        --restart=always \
+        israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev
     ;;
 
   test)
     docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
 
-    if ! [ "$(docker ps -aq -f name=$INSTALLATION_NAME)" ]; then
-        # this is an installation
+    # this is an installation
+    if ! [ "$(docker ps -aq -f name=$INSTALLATION_NAME)" ]; then       
         docker volume create ${INSTALLATION_NAME}_sites
         docker volume create ${INSTALLATION_NAME}_logs
-    else
-        # if this is an upgrade
+
+    # if this is an upgrade
+    else        
         docker rm -f $INSTALLATION_NAME
     fi
     
@@ -49,12 +69,14 @@ case $ENVIRONMENT in
         --name $INSTALLATION_NAME \
         --env DOMAIN_NAME=$DOMAIN_NAME \
         --env MYSQL_HOST=$MYSQL_HOST \
+        $NETWORK \
         --env MYSQL_DATABASE=$INSTALLATION_NAME \
         --env MYSQL_USER=$INSTALLATION_NAME \
         --env-file $CLINIKAL_DEVOPS_PATH/creds.cfg \
         --mount source=${INSTALLATION_NAME}_sites,target=/var/www/localhost/htdocs/openemr/sites \
         --mount source=${INSTALLATION_NAME}_logs,target=/var/log \
-        israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test  
+        --restart=always \
+        israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
     ;;
 
   prod)

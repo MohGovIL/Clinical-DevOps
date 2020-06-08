@@ -1,0 +1,40 @@
+{
+  "name": "clinikal/openemr",
+  "description": "Emergency Medicine vertical of clinikal project (fork of OpenEMR)",
+  "authors": [
+    {
+      "name": "Clinikal team"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/israeli-moh/clinikal-backend.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/israeli-moh/composer-installers-clinikal-extender.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/israeli-moh/vertical-emergency-medicine-backend.git"
+    }
+  ],
+  "require": {
+    "clinikal/clinikal-backend": "dev-develop",
+    "clinikal/composer-installers-clinikal-extender": "dev-master",
+    "clinikal/vertical-emergency-medicine-backend": "dev-develop"
+  },
+  "extra": {
+    "installer-types": [
+      "clinikal-vertical",
+      "clinikal-react"
+    ],
+    "installer-paths": {
+    }
+  },
+  "config":{
+    "clinikal-env": "test",
+    "install-name": "."
+  }
+}

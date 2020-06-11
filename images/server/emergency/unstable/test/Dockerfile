@@ -34,7 +34,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 WORKDIR /var/www/localhost/htdocs
 
 RUN git clone https://github.com/israeli-moh/clinikal-react.git --branch develop --depth 1 \
-    && rm -rf clinikal-react/.git \
     && cd clinikal-react \
     && npm install \
     && npm run build \

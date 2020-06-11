@@ -1,18 +1,7 @@
 #!/bin/sh
 
-echo "Configuring Openemr Permissions"
-chown -R apache openemr/
-
-# Check if we need to force an openemr upgrade
-if ! [ -f "initialized" ] && [ -f "/var/www/localhost/htdocs/openemr/sites/clinikal_installed" ];then
-    echo -n 0 > openemr/sites/default/docker-version
-fi
-
 # Script from openemr image
-cd openemr
-echo "Running Openemr Initialization"
 . autoconfig.sh
-cd ../
 
 # Only run on initial container start
 if ! [ -f "initialized" ];then
@@ -29,11 +18,14 @@ if ! [ -f "initialized" ];then
 
         # Create file as a flag that application installation process was run
         touch /var/www/localhost/htdocs/openemr/sites/clinikal_installed
-
+        
     # If we're running an upgrade
-    else        
+    else
+        echo "Running Openemr SQL Update"
+        php run_openemr_sql_update.php
+        
         echo "Updating Clinikal Modules"
-        while read module || [ -n "$module" ]; do
+        while read module; do
             echo "Updating $module Module..."
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_sql --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_acl --modname=$module
@@ -41,19 +33,8 @@ if ! [ -f "initialized" ];then
     fi
 
     echo "Adding Translations"
+    wget --tries=2 --no-check-certificate -O translation.sql https://40.87.137.89/clinikal-translation/pages/exportlang.php
     mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < translation.sql
-
-    echo "Configuring Client Application Permissions"
-    cd clinikal-react
-    chown -R apache .
-    #set all directories to 500
-    find . -type d -print0 | xargs -0 chmod 500
-    #set all file access to 400
-    find . -type f -print0 | xargs -0 chmod 400
-    cd ../
-
-    echo "Configuring Apache"
-    sed -i -e "s@<DOMAIN_NAME>@$DOMAIN_NAME@" /etc/apache2/conf.d/clinikal.conf
 
     # Create file as a flag that container was run for the first time
     touch initialized
@@ -61,8 +42,8 @@ else
     echo "Skipping container initialization"
 fi
 
-echo "Starting cron daemon"
+echo "Starting cron daemon!"
 crond
 
-echo "Starting Apache"
+echo "Starting apache!"
 /usr/sbin/httpd -D FOREGROUND

@@ -4,7 +4,7 @@
 mkdir -p $FULL_HOST_CODEBASE_PATH
 
 # download openemr
-git -C  $FULL_HOST_CODEBASE_PATH clone https://github.com/openemr/openemr.git openemr
+git -C  $FULL_HOST_CODEBASE_PATH clone https://github.com/matrix-israel/openemr.git openemr
 git -C  $FULL_HOST_CODEBASE_PATH/openemr fetch origin $OPENEMR_BRANCH
 git -C  $FULL_HOST_CODEBASE_PATH/openemr checkout $OPENEMR_BRANCH
 

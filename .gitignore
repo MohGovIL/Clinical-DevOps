@@ -1,4 +1,5 @@
 image.cfg
 container.cfg
 creds.cfg
-test.sh
+installations.cfg
+remove.cfg

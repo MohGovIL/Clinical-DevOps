@@ -53,7 +53,7 @@ case $ENVIRONMENT in
     ;;
 
   test)
-    docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
+    #docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
 
     # this is an installation
     if ! [ "$(docker ps -aq -f name=$INSTALLATION_NAME)" ]; then       

@@ -25,7 +25,7 @@ if ! [ -f "initialized" ];then
         php run_openemr_sql_update.php
         
         echo "Updating Clinikal Modules"
-        while read module; do
+        while read module || [ -n "$module" ]; do
             echo "Updating $module Module..."
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_sql --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_acl --modname=$module

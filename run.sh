@@ -8,8 +8,10 @@ FULL_HOST_CODEBASE_PATH=${HOST_CODEBASE_PATH}/${INSTALLATION_NAME}
 
 case $ENVIRONMENT in
   dev)
-    docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev
-    
+    if ! [ "$LOCAL_IMAGE" == "yes" ];then
+        docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-dev
+    fi
+
     if ! [ -d $FULL_HOST_CODEBASE_PATH/openemr ];then
         # this is an installation
         . $CLINIKAL_DEVOPS_PATH/dev-environment/scripts/initialize-codebase.sh
@@ -34,7 +36,9 @@ case $ENVIRONMENT in
     ;;
 
   test)
-    #docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
+    if ! [ "$LOCAL_IMAGE" == "yes" ];then
+        docker pull israelimoh/clinikal:$VERTICAL-$VERTICAL_VERSION-test
+    fi
 
     if ! [ "$(docker ps -aq -f name=$INSTALLATION_NAME)" ]; then
         # this is an installation

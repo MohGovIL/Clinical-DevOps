@@ -34,7 +34,6 @@ case $ENVIRONMENT in
         --env MYSQL_DATABASE=$INSTALLATION_NAME \
         --env MYSQL_USER=$INSTALLATION_NAME \
         --env CLINIKAL_SETTING_clinikal_storage_method=$STORAGE_METHOD \
-        --env CLINIKAL_SETTING_s3_version=$S3_API_VERSION \
         --env CLINIKAL_SETTING_s3_region=$S3_BUCKET_REGION \
         --env CLINIKAL_SETTING_s3_bucket_name=$BUCKET_NAME \
         --env CLINIKAL_SETTING_s3_path=$S3_PATH \
@@ -67,7 +66,6 @@ case $ENVIRONMENT in
         --env MYSQL_DATABASE=$INSTALLATION_NAME \
         --env MYSQL_USER=$INSTALLATION_NAME \
         --env CLINIKAL_SETTING_clinikal_storage_method=$STORAGE_METHOD \
-        --env CLINIKAL_SETTING_s3_version=$S3_API_VERSION \
         --env CLINIKAL_SETTING_s3_region=$S3_BUCKET_REGION \
         --env CLINIKAL_SETTING_s3_bucket_name=$BUCKET_NAME \
         --env CLINIKAL_SETTING_s3_path=$S3_PATH \

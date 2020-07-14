@@ -16,6 +16,21 @@ if ! [ -f "initialized" ];then
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=install_acl --modname=$module
         done < modules.txt 
 
+        echo "Initializing Clinikal Globals"
+        # copied logic from autoconfig.sh for OPENEMR_SETTING and applied to CLINIKAL_SETTING (but with REPLACE instead of UPDATE)
+        CLINIKAL_SETTINGS=`printenv | grep '^CLINIKAL_SETTING_'`
+        if [ -n "$CLINIKAL_SETTINGS" ]; then
+            echo "$CLINIKAL_SETTINGS" |
+            while IFS= read -r line; do
+                SETTING_TEMP=`echo "$line" | cut -d "=" -f 1`
+                # note am omitting the letter C on purpose
+                CORRECT_SETTING_TEMP=`echo "$SETTING_TEMP" | awk -F 'LINIKAL_SETTING_' '{print $2}'`
+                VALUE_TEMP=`echo "$line" | cut -d "=" -f 2`
+                echo "Set ${CORRECT_SETTING_TEMP} to ${VALUE_TEMP}"
+                mysql -u "$MYSQL_USER"  --password="$MYSQL_PASS" -h "$MYSQL_HOST" -e "REPLACE INTO globals (gl_name, gl_value) VALUES ('${CORRECT_SETTING_TEMP}', '${VALUE_TEMP}')" "$MYSQL_DATABASE"
+            done
+        fi
+
         # Create file as a flag that application installation process was run
         touch /var/www/localhost/htdocs/openemr/sites/clinikal_installed
         

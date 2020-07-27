@@ -1,0 +1,16 @@
+GenericTools
+Formhandler
+ImportData
+ClinikalMohIl
+AddictionsSettings
+Pouring
+Urinetest
+Reports
+Patientstatus
+Chargesandpayments
+PatientCaregivers
+AppointmentsHistory
+Dosagelist
+LabTestHistory
+Approveddrug
+Asi

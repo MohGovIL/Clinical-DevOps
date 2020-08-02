@@ -14,7 +14,7 @@ if ! [ -f "initialized" ];then
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=install --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=disable --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=install_acl --modname=$module
-        done < modules.txt 
+        done < modules.txt
 
         echo "Initializing Clinikal Globals"
         # copied logic from autoconfig.sh for OPENEMR_SETTING and applied to CLINIKAL_SETTING (but with REPLACE instead of UPDATE)
@@ -33,18 +33,23 @@ if ! [ -f "initialized" ];then
 
         # Create file as a flag that application installation process was run
         touch /var/www/localhost/htdocs/openemr/sites/clinikal_installed
-        
+
     # If we're running an upgrade
     else
         echo "Running Openemr SQL Update"
         php run_openemr_sql_update.php
-        
+
         echo "Updating Clinikal Modules"
         while read module || [ -n "$module" ]; do
             echo "Updating $module Module..."
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_sql --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_acl --modname=$module
-        done < modules.txt 
+        done < modules.txt
+    fi
+
+    if ! [ -f "openemr/interface/modules/zend_modules/module/ClinikalMohIl/sql/special_queries.sql" ]; then
+        echo "Install/update special sql queries"
+        mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < openemr/interface/modules/zend_modules/module/ClinikalMohIl/sql/special_queries.sql
     fi
 
     echo "Adding Translations"

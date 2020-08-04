@@ -2,6 +2,7 @@ GenericTools
 Formhandler
 ImportData
 ClinikalMohIl
+Errors
 AddictionsSettings
 Pouring
 Urinetest

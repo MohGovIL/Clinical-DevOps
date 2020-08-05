@@ -54,6 +54,9 @@ if ! [ -f "initialized" ];then
     echo "Connect to patients record DB"
     php openemr/interface/modules/zend_modules/public/index.php connect-patients-record --user=${MYSQL_ROOT_USER} --pass=${MYSQL_ROOT_PASS}
 
+    echo "Create base_path.js file"
+    echo "var BASE_PUBLIC_CLINIKAL_PATH = '';" > openemr/interface/modules/zend_modules/public/js/clinikalmohil/base_path.js
+
     echo "Adding Translations"
     wget --tries=2 --no-check-certificate -O translation.sql https://40.87.137.89/clinikal-translation/pages/exportlang.php
     mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < translation.sql

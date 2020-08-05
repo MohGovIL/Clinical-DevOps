@@ -17,6 +17,7 @@
     },
     {
       "type": "vcs",
+      "no-api": true,	
       "url": "git@github.com:israeli-moh/vertical-emergency-medicine-backend.git"
     }
   ],

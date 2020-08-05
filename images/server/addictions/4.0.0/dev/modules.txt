@@ -4,6 +4,7 @@ ImportData
 ClinikalMohIl
 Errors
 Multipledb
+Patientvalidation
 AddictionsSettings
 Pouring
 Urinetest
@@ -16,3 +17,4 @@ Dosagelist
 LabTestHistory
 Approveddrug
 Asi
+Remotepatientrecordapi

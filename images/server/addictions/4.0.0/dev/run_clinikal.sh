@@ -51,6 +51,8 @@ if ! [ -f "initialized" ];then
         echo "Install/update special sql queries"
         mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < openemr/interface/modules/zend_modules/module/ClinikalMohIl/sql/special_queries.sql
     fi
+    echo "Connect to patients record DB"
+    php openemr/interface/modules/zend_modules/public/index.php connect-patients-record --user=${MYSQL_ROOT_USER} --pass=${MYSQL_ROOT_PASS}
 
     echo "Adding Translations"
     wget --tries=2 --no-check-certificate -O translation.sql https://40.87.137.89/clinikal-translation/pages/exportlang.php

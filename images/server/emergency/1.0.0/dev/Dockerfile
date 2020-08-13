@@ -12,5 +12,7 @@ COPY run_clinikal.sh run_openemr_sql_update.php modules.txt /var/www/localhost/h
 
 RUN chmod 500 run_clinikal.sh
 
+RUN ln -sf /dev/stderr /var/log/apache2/error.log
+
 CMD [ "./run_clinikal.sh" ]
 

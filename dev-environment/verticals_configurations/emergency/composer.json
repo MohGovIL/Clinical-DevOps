@@ -17,12 +17,12 @@
     },
     {
       "type": "vcs",
-      "no-api": true,	
+      "no-api": true,
       "url": "git@github.com:israeli-moh/vertical-emergency-medicine-backend.git"
     }
   ],
   "require": {
-    "clinikal/clinikal-backend": "<GENERIC_BRANCH>",
+    "clinikal/clinikal-backend": "<CLINIKAL_BACKEND_BRANCH>",
     "clinikal/composer-installers-clinikal-extender": "dev-master",
     "clinikal/vertical-emergency-medicine-backend": "<VERTICAL_BRANCH>"
   },

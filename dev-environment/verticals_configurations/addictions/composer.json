@@ -9,22 +9,28 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/clinikal-backend.git"
-    },
-    {
-      "type": "vcs",
       "url": "git@github.com:israeli-moh/composer-installers-clinikal-extender.git"
     },
     {
       "type": "vcs",
+      "url": "git@github.com:israeli-moh/clinikal-backend.git"
+    },
+    {
+      "type": "vcs",
       "no-api": true,
-      "url": "git@github.com:israeli-moh/vertical-emergency-medicine-backend.git"
+      "url": "git@github.com:israeli-moh/clinikal-moh-il.git"
+    },
+    {
+      "type": "vcs",
+      "no-api": true,
+      "url": "git@github.com:israeli-moh/vertical-addictions.git"
     }
   ],
   "require": {
-    "clinikal/clinikal-backend": "<CLINIKAL_BACKEND_BRANCH>",
     "clinikal/composer-installers-clinikal-extender": "dev-master",
-    "clinikal/vertical-emergency-medicine-backend": "<VERTICAL_BRANCH>"
+    "clinikal/clinikal-backend": "<CLINIKAL_BACKEND_BRANCH>",
+    "clinikal/moh-il-backend": "<CLINIKAL_MOH_IL_BRANCH>",
+    "clinikal/vertical-addictions": "<VERTICAL_BRANCH>"
   },
   "extra": {
     "installer-types": [

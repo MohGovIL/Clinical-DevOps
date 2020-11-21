@@ -1,4 +1,4 @@
-FROM openemr/openemr:flex-3.10
+FROM openemr/openemr:flex-3.11
 
 RUN apk --no-cache upgrade && apk add --no-cache php7-xdebug
 

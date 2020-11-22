@@ -1,4 +1,4 @@
-FROM israelimoh/openemr:5.0.3-beta
+FROM israelimoh/openemr:6.0.0-beta
 
 RUN apk --no-cache upgrade \
     && apk add --no-cache git php7 php7-json php7-phar php7-mbstring php7-openssl curl npm
@@ -30,7 +30,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
     && composer global remove phing/phing \
     && composer dump-autoload -o \
     && composer clearcache
-    
+
 WORKDIR /var/www/localhost/htdocs
 
 RUN git clone https://github.com/israeli-moh/clinikal-react.git --branch develop --depth 1 \

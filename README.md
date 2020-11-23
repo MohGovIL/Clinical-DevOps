@@ -1,4 +1,4 @@
-###### Clinikal Docker Images
+## Clinikal Docker Images ##
 
 The Clinikal docker images are stored on Dockerhub at https://hub.docker.com/repository/docker/israelimoh/clinikal. Refer to this address to see which images can currently be used.
 

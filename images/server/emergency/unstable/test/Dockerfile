@@ -18,7 +18,7 @@ ARG CACHEBUST=1
 RUN echo "CACHEBUST: $CACHEBUST"
 
 ARG GITHUB_TOKEN
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --version=1.9.3 --filename=composer \
     && composer config -g github-oauth.github.com $GITHUB_TOKEN \
     && php create-composer-file.php . composer-clinikal.json \
     && rm create-composer-file.php \

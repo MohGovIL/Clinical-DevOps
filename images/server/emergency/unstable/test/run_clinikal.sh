@@ -25,7 +25,7 @@ if ! [ -f "initialized" ];then
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=install --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=disable --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=install_acl --modname=$module
-        done < modules.txt 
+        done < modules.txt
 
         echo "Initializing Clinikal Globals"
         # copied logic from autoconfig.sh for OPENEMR_SETTING and applied to CLINIKAL_SETTING (but with REPLACE instead of UPDATE)
@@ -46,17 +46,20 @@ if ! [ -f "initialized" ];then
         touch /var/www/localhost/htdocs/openemr/sites/clinikal_installed
 
     # If we're running an upgrade
-    else        
+    else
         echo "Updating Clinikal Modules"
         while read module || [ -n "$module" ]; do
             echo "Updating $module Module..."
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_sql --modname=$module
             php openemr/interface/modules/zend_modules/public/index.php zfc-module --site=default --modaction=upgrade_acl --modname=$module
-        done < modules.txt 
+        done < modules.txt
     fi
 
     echo "Adding Translations"
     mysql -u${MYSQL_ROOT_USER} -p${MYSQL_ROOT_PASS} -h${MYSQL_HOST}  ${MYSQL_DATABASE} < translation.sql
+
+    echo "Updating menus"
+    cp -r /var/www/localhost/custom_menus/ openemr/sites/default/documents/
 
     echo "Configuring Client Application Permissions"
     cd clinikal-react

@@ -30,6 +30,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
     && composer global remove phing/phing \
     && composer dump-autoload -o \
     && composer clearcache
+# for updating menues in the volume
+RUN cp -r sites/default/documents/custom_menus/ /var/www/localhost
 
 WORKDIR /var/www/localhost/htdocs
 

@@ -1,69 +1,28 @@
- **Clinikal Docker Images**
+## What is clinikal?
 
-The Clinikal docker images are stored on Dockerhub at https://hub.docker.com/repository/docker/israelimoh/clinikal. Refer to this address to see which images can currently be used.
+Clinikal is a Electric Medical Records application.  
+Clinical offers a new experience of administrative and medical management for variety of clinics.  
+The foundation of the application is the popular open source [OpenEMR](https://github.com/openemr/openemr), we developed new layer of Fhir API base on ZF2 modules and new and modern React.js application to enjoy from wonderful user experience.  
+Clinikal continues to use OpenEMR interfaces as Content Management System for manage users, permissions, lists etc. (we doesn't supply compatibility with all Openemr screens) 
 
+The principle that guides us is **clean and clear**.  
+Each user sees only the screens and forms relevant to his role in the clinic.   
+This ability is caused by using a system of roles and privileges for each profession in the clinic and a different installation process for each medical field which creates an innovative and convenient user experience!
 
-**Configuration**
+### Get started and documentation
+To get started and documentation at https://clinikal-documentation.readthedocs.io/
 
-There are 2 configuration files relevant to an installation/upgrade:
-
-sample.creds.cfg - contains credentials such as database user name and password
-
-sample.container.cfg - contains configurations for running the container
-
-Rename these files to creds.cfg and container.cfg, respectively.
-
-The following is a table explaining each configuration option in sample.container.cfg:
-
-| **Environment** | **Variable**                                 | **Description**                                                                                                                                                                                                                                                                               |
-| --------------- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| All             | INSTALLATION\_NAME                           | This will be used as the container name, database name, database username.<br>In the development environment it will also be used as the directory name containing the code-base on the host machine.<br>In the test and prod environments it will be used as a prefix of the volumes' names. |
-| All             | ENVIRONMENT<br>VERTICAL<br>VERTICAL\_VERSION | An image tag is made up of : VERTICAL-VERTICAL\_VERSION-ENVIRONMENT<br>These configuration values will determine which image will be used.                                                                                                                                                    |
-| All             | MYSQL\_HOST                                  | Address of database server.<br>In development the database is currently local, so this is set to the docker network bridge’s host machine IP.                                                                                                                                                 |
-| All             | STORAGE\_METHOD                              | leave it as 10, this means S3 will be used                                                                                                                                                                                                                                                    |
-| Development     | OPENEMR\_PORT                                | Port on host machine through which openemr in the container can be accessed.<br>(You can choose any port that is currently open).                                                                                                                                                             |
-| Development     | HOST\_CODEBASE\_PATH                         | In development the code-base is downloaded on the host machine. This is the absolute path on the host machine where the code-base will be downloaded.                                                                                                                                         |
-| Development     | OPENEMR\_BRANCH                              | Branch of openemr repository to download                                                                                                                                                                                                                                                      |
-| Development     | GENERIC\_BRANCH                              | Branch of clinikal-backend repository to download                                                                                                                                                                                                                                             |
-| Development     | VERTICAL\_BRANCH                             | Branch of the chosen vertical repository to download                                                                                                                                                                                                                                          |
-| Development     | CLIENT\_APP\_BRANCH                          | Branch of the client application repository to download                                                                                                                                                                                                                                       |
-| Development     | DEVELOPER\_NAME                              | put in your name. This will be part of the path in S3 and distinguish between different devs                                                                                                                                                                                                  |
-| Test & Prod     | DOMAIN\_NAME                                 | Domain name that will be used to access application                                                                                                                                                                                                                                           |
-| Test & Prod     | ROLLING\_OPENEMR\_VERSION                    | Valid values: yes/no<br>Set to “yes” if the openemr image version we are using has not yet been closed. This will make sure that every time we run an upgrade, the openemr upgrade will run as well.                                                                                          |
-
-The following is a table explaining each configuration option in sample.creds.cfg:
-
-| **Variable**                           | **Description**                                                                                                                                                                                             |
-| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| MYSQL\_ROOT\_USER<br>MYSQL\_ROOT\_PASS | An existing username and password of user with root privileges                                                                                                                                              |
-| MYSQL\_PASS                            | In every installation there is a new database user that is created.<br>The username of this user is the INSTALLATION\_NAME value from the conatiner.cfg file.<br>MYSQL\_PASS is the password for this user. |
-| OE\_USER<br>OE\_PASS                   | Username and password of the openemr user created during installation.<br>Use this for the first login into the application.                                                                                |
-| AWS\_ACCESS\_KEY\_ID                   | need to be obtained using an IAM aws user                                                                                                                                                                   |
-| AWS\_SECRET\_ACCESS\_KEY               | need to be obtained using an IAM aws user                                                                                                                                                                   |
-
-**Installation & Upgrade**
-
-cd into the clinikal-devops directory and run bash run.sh. If there is already an existing installation with the same INSTALLATION_NAME, the script will perform an upgrade instead of an installation.
-
-Important: Before a new installation make sure to change the INSTALLATION_NAME and OPENEMR_PORT.
-
-Note: When installing for the first time, the installation process might pause and request a Github Token. Just follow the instructions printed in the terminal as to how to generate the token and what to do with it.
-
-**Accessing The Application**
-
-_In the development environment:_
-
-In the development environment the clinikal client application is completely outside of the container and communicates with the server-side inside the container.
-
-Go to HOST_CODEBASE_PATH/INSTALLATION_NAME/clinikal-react and run npm start.
-
-To directly access the api or the  community’s openemr frontend, use localhost:OPENEMR_PORT.
-
-_In the test environment:_
-
-To access the clinikal client application, use DOMAIN_NAME.
-
-To access the api or the  community’s openemr frontend, use backend.DOMAIN_NAME (e.g. backend.whatever.com).
+### Clinikal-devpos
+The repository contains a set of tools for development and deployment. quick install for development environment, closing docker images for various environments and more.  
+Look at [documentation](https://clinikal-documentation.readthedocs.io/en/latest/get_started/docker_installation/#developers-tools) to learn how to setup a development environment based on Docker easily.    
 
 
-This project is sponsored by the Israeli Ministry Of Health.
+### Resources
+* [Docker installation](https://clinikal-documentation.readthedocs.io/en/latest/get_started/docker_installation/)  
+
+### License
+Please see the [license agreement](https://github.com/israeli-moh/clinikal-react/blob/develop/LICENSE).
+
+### Acknowledgement
+The Clinikal team would like to thank Israeli Ministry Of Health that sponsored this project.
+

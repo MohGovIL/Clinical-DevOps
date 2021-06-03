@@ -22,7 +22,3 @@ Look at [documentation](https://clinikal-documentation.readthedocs.io/en/latest/
 
 ### License
 Please see the [license agreement](https://github.com/israeli-moh/clinikal-react/blob/develop/LICENSE).
-
-### Acknowledgement
-The Clinikal team would like to thank Israeli Ministry Of Health that sponsored this project.
-

@@ -33,7 +33,7 @@ npm run --prefix $FULL_HOST_CODEBASE_PATH/openemr build
 
 if [ -n "$CLIENT_APP_BRANCH" ]; then
   # download client application
-  git -C  $FULL_HOST_CODEBASE_PATH clone git@github.com:israeli-moh/clinikal-react.git
+  git -C  $FULL_HOST_CODEBASE_PATH clone git@github.com:MohGovIL/Clinical-React.git clinikal-react
   git -C  $FULL_HOST_CODEBASE_PATH/clinikal-react fetch origin $CLIENT_APP_BRANCH
   git -C  $FULL_HOST_CODEBASE_PATH/clinikal-react checkout $CLIENT_APP_BRANCH
 

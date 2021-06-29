@@ -9,21 +9,21 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/composer-installers-clinikal-extender.git"
+      "url": "git@github.com:MohGovIL/Clinical-Backend.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/clinikal-backend.git"
-    },
-    {
-      "type": "vcs",
-      "no-api": true,
-      "url": "git@github.com:israeli-moh/clinikal-moh-il.git"
+      "url": "git@github.com:MohGovIL/Clinical-composer-installers.git"
     },
     {
       "type": "vcs",
       "no-api": true,
-      "url": "git@github.com:israeli-moh/vertical-addictions.git"
+      "url": "git@github.com:MohGovIL/Clinical-MOH-IL.git"
+    },
+    {
+      "type": "vcs",
+      "no-api": true,
+      "url": "git@github.com:MohGovIL/Clinicak-Vertical-addictions.git"
     }
   ],
   "require": {

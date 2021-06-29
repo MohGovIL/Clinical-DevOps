@@ -9,15 +9,15 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/clinikal-backend.git"
+      "url": "git@github.com:MohGovIL/Clinical-Backend.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/composer-installers-clinikal-extender.git"
+      "url": "git@github.com:MohGovIL/Clinical-composer-installers.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/vertical-imaging-backend.git"
+      "url": "https://github.com/israeli-moh/vertical-imaging-backend.git"
     }
   ],
   "require": {

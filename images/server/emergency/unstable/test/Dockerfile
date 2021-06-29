@@ -35,7 +35,7 @@ RUN cp -r sites/default/documents/custom_menus/ /var/www/localhost
 
 WORKDIR /var/www/localhost/htdocs
 
-RUN git clone https://github.com/israeli-moh/clinikal-react.git --branch develop --depth 1 \
+RUN git clone https://github.com/MohGovIL/Clinical-React.git clinikal-react --branch develop --depth 1 \
     && cd clinikal-react \
     && npm install \
     && npm run build \

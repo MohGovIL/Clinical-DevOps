@@ -9,16 +9,16 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/clinikal-backend.git"
+      "url": "git@github.com:MohGovIL/Clinical-Backend.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:israeli-moh/composer-installers-clinikal-extender.git"
+      "url": "git@github.com:MohGovIL/Clinical-composer-installers.git"
     },
     {
       "type": "vcs",
       "no-api": true,
-      "url": "git@github.com:israeli-moh/vertical-emergency-medicine-backend.git"
+      "url": "git@github.com:MohGovIL/Clinical-Vertical-emergency-medicine-backend.git"
     }
   ],
   "require": {
